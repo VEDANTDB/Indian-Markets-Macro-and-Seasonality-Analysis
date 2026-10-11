@@ -44,7 +44,7 @@ function show(k){
     document.getElementById("f-"+x).classList.toggle("hid",x!==k);
     document.querySelector(`.tab[data-t="${x}"]`).classList.toggle("on",x===k);
   });
-  if(!loaded[k]){document.getElementById("f-"+k).srcdoc=dec(SRC[k]).replace("</head>",'<style>.brand{display:none!important}</style></head>');loaded[k]=true}
+  if(!loaded[k]){document.getElementById("f-"+k).srcdoc=dec(SRC[k]).replace("</head>",'<style>.brand{display:none!important}</style></head>').replace("</body>",'<script>document.addEventListener("click",function(e){var a=e.target.closest("a[href^=\\"#\\"]");if(!a)return;e.preventDefault();var t=document.querySelector(a.getAttribute("href"));if(t)t.scrollIntoView({behavior:"smooth",block:"start"})});<\/script></body>');loaded[k]=true}
 }
 function getGuide(){
   const u=Uint8Array.from(atob(GUIDE),c=>c.charCodeAt(0));
