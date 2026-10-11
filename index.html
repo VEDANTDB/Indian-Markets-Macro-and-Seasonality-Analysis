@@ -1,192 +1,384 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>India Sector Rotation Dashboard</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>India Sector Rotation Dashboard</title>
 <style>
-:root{--bg:#f4f3ee;--card:#fff;--tx:#1d1d1b;--mut:#66655e;--bd:#e0ded5;--ac:#0f6e56;--neg:#b3392f;--pos:#0f6e56;--bar:#c4c1b5;--nb:#eef6f3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171715;--card:#222220;--tx:#eeede8;--mut:#a09f96;--bd:#38372f;--ac:#3fbf99;--neg:#ef7b70;--pos:#3fbf99;--bar:#55544b;--nb:#1e2a26}}
-:root[data-theme="dark"]{--bg:#171715;--card:#222220;--tx:#eeede8;--mut:#a09f96;--bd:#38372f;--ac:#3fbf99;--neg:#ef7b70;--pos:#3fbf99;--bar:#55544b;--nb:#1e2a26}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.w{max-width:1040px;margin:0 auto;padding:16px}
-h1{font-size:20px;margin:0}h2{font-size:15px;margin:0 0 6px}h3{font-size:13px;margin:10px 0 4px}
-.sub{color:var(--mut);margin:2px 0 12px;font-size:13px}
-.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:12px}
-.kp div{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px}
-.kp b{display:block;font-size:18px}.kp span{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:6px 11px;border-radius:8px;cursor:pointer}
-button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
-.note{background:var(--nb);border-left:3px solid var(--ac);border-radius:6px;padding:8px 10px;font-size:13px;margin-bottom:12px}
-.ins{background:var(--nb);border-radius:8px;padding:8px 10px;margin-top:10px;font-size:13px}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-@media(max-width:720px){.g2{grid-template-columns:1fr}}
-.sl{display:grid;grid-template-columns:120px 1fr 38px;gap:8px;align-items:center;font-size:13px;margin-top:6px}
-.sl input{width:100%;accent-color:var(--ac)}.d{font-size:11px;color:var(--mut);margin:0 0 2px 128px}
-.big{font-size:24px;font-weight:600}.mut{color:var(--mut);font-size:12px}
-.row{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-size:13px;margin:5px 0}
-.bt{position:relative;height:16px}.bt i{position:absolute;left:0;height:7px;border-radius:3px}
-.b1{top:0;background:var(--bar)}.b2{top:8px;background:var(--ac)}
-.pos{color:var(--pos)}.neg{color:var(--neg)}
-.sc{overflow-x:auto}table{border-collapse:collapse;font-size:12px}td,th{padding:5px 7px;text-align:center;border:1px solid var(--bd)}
-.warn{background:rgba(179,57,47,.1);border:1px solid var(--neg);border-radius:8px;padding:8px;font-size:13px;margin-top:8px}
-.pill{display:inline-block;padding:2px 8px;border-radius:99px;background:var(--bd);font-size:11px;margin:2px 2px 2px 0}
-.sec{display:none}.sec.on{display:block}
-.sc2 dl{margin:0;font-size:12px}.sc2 dt{color:var(--mut);margin-top:5px}.sc2 dd{margin:0}
-.leg{display:flex;gap:12px;font-size:12px;color:var(--mut);margin:4px 0}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
-details{margin:6px 0}summary{cursor:pointer;font-weight:600}
-.sl2{display:flex;justify-content:space-between;align-items:center;font-size:13px}.sl input[type=number],#cal input{font:inherit;padding:2px 4px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--tx)}td.l{text-align:left}
-</style></head><body><div class="w">
-<h1>India Sector Rotation Dashboard</h1>
-<p class="sub">Which part of the economic cycle are we in, and how should a sector portfolio lean? Based on the report "Macroeconomic Cyclicality, Cross-Sector Correlations and Dynamic Portfolio Engineering in the Indian Equity Market". Includes a monthly seasonality study. Research tool, not investment advice.</p>
-<div class="kp" id="kp"></div>
-<div class="tabs" id="tabs"></div>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+:root{--ink:#0b1220;--ink2:#334155;--mut:#64748b;--line:#e5e9f0;--bg:#f5f7fb;--card:#fff;--nav:#0b1f3f;--acc:#2563eb;--pos:#059669;--posb:#d1fae5;--neg:#dc2626;--negb:#fee2e2;--ambb:#fef3c7;--sh:0 1px 2px rgba(15,23,42,.05),0 8px 24px -12px rgba(15,23,42,.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.55 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,Georgia,serif}
+button,input,select{font:inherit}
+header.top{position:sticky;top:0;z-index:30;background:linear-gradient(120deg,#0b1f3f,#16315c);color:#fff;padding:12px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 6px 20px -10px rgba(11,31,63,.6)}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#2563eb);display:grid;place-items:center;font-weight:700}
+.brand h1{font-size:18px}.brand small{display:block;color:#93c5fd;font-size:11.5px;font-family:Inter}
+nav.links{display:flex;gap:2px;flex-wrap:wrap}
+nav.links a{color:#cbd5e1;text-decoration:none;font-size:12.5px;padding:6px 10px;border-radius:8px}
+nav.links a:hover{background:rgba(255,255,255,.1);color:#fff}
+.hchip{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 11px;font-size:12px;color:#e0f2fe;margin-left:6px}
+main{max-width:1280px;margin:0 auto;padding:22px 20px 50px}
+section{scroll-margin-top:84px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--sh);margin-bottom:16px}
+.ch{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.ch h2{font-size:17px;color:var(--nav)}
+.num{width:24px;height:24px;border-radius:50%;background:var(--nav);color:#fff;font-size:12px;display:inline-grid;place-items:center;font-weight:600}
+.sub{color:var(--mut);font-size:12.5px;margin:4px 0 14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.g2{grid-template-columns:1fr}nav.links{display:none}}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:linear-gradient(160deg,#fff,#f8fafc);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--sh)}
+.kpi .l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);font-weight:600}
+.kpi .v{font:700 22px Fraunces,Georgia,serif;color:var(--nav);margin-top:3px}
+.kpi .d{font-size:12px;color:var(--mut)}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}}
+.btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 12px;cursor:pointer;color:var(--ink2);font-weight:500}
+.btn:hover{background:#f8fafc}.btn.on{background:var(--nav);color:#fff;border-color:var(--nav)}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}
+input[type=number],select{padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff}
+input[type=range]{accent-color:var(--acc);width:100%}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px}
+.tag.pos{background:var(--posb);color:#065f46}.tag.neg{background:var(--negb);color:#7f1d1d}.tag.mut{background:#eef2f7;color:var(--ink2)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.mut{color:var(--mut)}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.irow{padding:12px 0;border-bottom:1px solid var(--line)}.irow:last-child{border:0}
+.ih{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.ih b{font-size:13.5px}
+.grp{font-size:11px;color:var(--mut);background:#f1f5f9;padding:2px 8px;border-radius:999px}
+.stat{margin-left:auto;font-size:12px;font-weight:600;color:var(--ink2);background:#f8fafc;border:1px solid var(--line);padding:2px 9px;border-radius:999px}
+.ictl{display:grid;grid-template-columns:1fr 84px 40px 64px;gap:10px;align-items:center;margin:8px 0 4px}
+.unit{font-size:12px;color:var(--mut)}.zv{font-size:12px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.hint{font-size:11.5px;color:var(--mut)}.hint i{color:#94a3b8;font-style:normal}
+.crow{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;align-items:center;font-size:12.5px;padding:5px 0}
+.crow.hd{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.crow input{width:100%}
+details{font-size:13px;color:var(--ink2);margin-top:12px}
+summary{cursor:pointer;font-weight:600;color:var(--nav)}
+details p{margin-top:6px}
+.regbox{text-align:center;margin-bottom:8px}
+.regname{font:700 24px Fraunces,Georgia,serif;color:var(--nav);margin-top:2px}
+.quadsvg{width:100%;max-width:340px;display:block;margin:0 auto}
+.q{fill:#f1f5f9}.qa{fill:rgba(37,99,235,.16)}
+.ql{font-size:10.5px;fill:#64748b;font-weight:600}
+.dot{fill:var(--acc);stroke:#fff;stroke-width:2}.halo{fill:rgba(37,99,235,.18)}
+.callout{background:#f8fafc;border-left:3px solid var(--acc);padding:10px 12px;border-radius:0 10px 10px 0;font-size:12.5px;color:var(--ink2);margin-top:12px}
+.drow{display:grid;grid-template-columns:170px 1fr 60px;gap:10px;align-items:center;font-size:12.5px;margin-top:10px}
+.dl em{font-style:normal;color:var(--mut);font-size:11px}
+.dbar{position:relative;height:12px;background:#f1f5f9;border-radius:6px}
+.dbar i{position:absolute;top:0;height:100%;border-radius:6px}
+.dmid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1.5px;background:#94a3b8}
+.dv{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.dnote{font-size:11px;color:var(--mut);margin:-2px 0 0 180px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.scard{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;border-top:4px solid #cbd5e1}
+.scard.pos{border-top-color:var(--pos)}.scard.neg{border-top-color:var(--neg)}
+.shead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.shead b{font-size:14px}
+.gauge{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,#fecaca,#e5e7eb 50%,#a7f3d0);margin:6px 0 2px}
+.gauge span{position:absolute;top:-4px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#0b1220;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.sfacts{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;font-size:12.5px;margin-top:10px}
+.sfacts span{display:block;color:var(--mut);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+.brow{display:grid;grid-template-columns:72px 1fr 118px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px}
+.bpair{position:relative;height:14px}
+.bb,.bw{position:absolute;left:0;height:6px;border-radius:3px}
+.bb{top:0;background:#cbd5e1}.bw{top:8px;background:var(--acc)}
+.bv{text-align:right;font-variant-numeric:tabular-nums}.bv em{font-style:normal;font-size:11.5px}
+.mtiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.mt{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px}
+.mt .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.mt .v{font:700 19px Fraunces,Georgia,serif;color:var(--nav)}
+@media(max-width:900px){.mtiles{grid-template-columns:1fr 1fr}}
+.warn{background:var(--ambb);border:1px solid #fcd34d;color:#78350f;border-radius:10px;padding:10px 12px;font-size:12.5px;margin-top:12px}
+.tw{overflow:auto}
+table.hm{border-collapse:separate;border-spacing:3px;font-size:12px;font-variant-numeric:tabular-nums;margin:auto}
+table.hm th{font-weight:600;color:var(--ink2);font-size:11.5px;padding:4px 6px;white-space:nowrap}
+table.hm td{width:66px;height:42px;text-align:center;border-radius:8px;font-weight:600}
+.legend{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--mut);margin-top:12px;justify-content:center}
+.ramp{width:160px;height:10px;border-radius:5px;background:linear-gradient(90deg,#eff6ff,#1d4ed8)}
+.month-bars{display:flex;align-items:flex-end;gap:6px;height:150px;margin:14px 0 26px;border-bottom:1px solid var(--line)}
+.mbar{flex:1;border-radius:6px 6px 0 0;position:relative;cursor:pointer;transition:.15s}
+.mbar.on{outline:2px solid var(--nav);outline-offset:2px}
+.mbar span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--mut)}
+.big{font:700 26px Fraunces,Georgia,serif;color:var(--nav)}
+.season-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+@media(max-width:900px){.season-grid{grid-template-columns:1fr}}
+dl.facts{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+dl.facts dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+dl.facts dd{font-size:13px;color:var(--ink2)}
+.sel{min-width:180px}
+footer{font-size:11.5px;color:var(--mut);text-align:center;margin-top:20px}
+</style></head><body>
 
-<div class="sec" id="s7"><div class="note"><b>How to read:</b> Each sector gets a score from −1 to +1 that blends two things: the regime view (its weight versus Nifty 50 in the detected regime, where ±6 points = ±1) and the selected month's seasonal score. <b>Favour</b> is +0.30 or higher, <b>Avoid</b> is −0.30 or lower. Change the regime on the Regime detector tab, the month and seasonality weight here.</div>
-<div class="card" id="bsum"></div>
-<div class="card"><div class="tabs" id="bm" style="margin-top:0"></div><div class="sl" style="grid-template-columns:150px 1fr 40px"><span>Weight on seasonality</span><input type="range" id="bw" min="0" max="100" value="30"><span id="bwv">30%</span></div><div class="sc"><table id="btb" style="width:100%"></table></div></div>
-<div class="g2"><div class="card" id="bwhy"></div><div class="card" id="bwatch"></div></div>
-<div class="card"><h2>Market context (news as of 6 Oct 2026)</h2><p class="mut">The repo rate was 5.25% and the stance neutral, unchanged through the last four reviews, after 125bp of cuts since Feb 2025. Economists were split on a 25bp hike at the 5–7 Oct meeting (it would be the first hike since Feb 2023); Nomura and SBI Research expected one in October and another in December. In August the RBI said it expected headline inflation to peak in Oct–Dec. I could not confirm the 7 Oct decision, so check it before use. Repo 12-month change is currently about −25bp (5.50% in Oct 2025 to 5.25%), or 0 if the hike was delivered. October is also the strongest month seasonally (75–80% win rate).</p></div></div>
-<div class="sec" id="s0">
-<div class="note"><b>How to use:</b> Enter the latest reading for each indicator in its real unit (CPI in %, repo change in bp, and so on). The dashboard converts each to a z-score, blends them into a Growth score (G) and an Inflation/Tightening score (I), and names the regime. Then open the <b>Signal board</b> for sector-by-sector calls.</div>
-<div class="g2"><div class="card"><h2>Macro indicators</h2><p class="mut">Type a number or drag. Presets load a typical set of readings for each regime.</p><div id="pre" class="tabs" style="margin:0 0 4px"></div><div id="sliders"></div><details><summary>Calibration: how readings become z-scores</summary><p class="mut">z = (reading − centre) ÷ scale. Credit, PMI and CPI use the report's own thresholds (credit 8–14%, PMI 50–54, CPI 2–6% band). The other centres and scales are my assumptions, so edit them to match your own 36-month history. Yield slope is inverted in the model.</p><div class="mut" style="display:grid;grid-template-columns:1fr 70px 70px;gap:8px"><span></span><span>Centre</span><span>Scale</span></div><div id="cal"></div></details></div>
-<div class="card"><h2>Detected regime</h2><div class="big" id="rg">-</div><div class="mut" id="gi"></div>
-<svg id="q" viewBox="0 0 240 200" style="width:100%;max-width:300px;margin-top:6px"></svg>
-<div id="fav"></div><div class="ins" id="rgn"></div>
-<p class="mut">Safeguard in the report: a regime only switches after 2 consecutive monthly confirmations, to avoid whipsaws.</p></div></div></div>
+<header class="top">
+  <div class="brand"><div class="logo">📊</div><div><h1>Sector Rotation</h1><small>India · NSE sector indices · regime, seasonality and shocks</small></div></div>
+  <nav class="links">
+    <a href="#s-macro">Regime</a><a href="#s-signals">Signals</a><a href="#s-alloc">Allocation</a><a href="#s-sectors">Sectors</a><a href="#s-corr">Correlations</a><a href="#s-shock">Shocks</a><a href="#s-season">Seasonality</a><a href="#s-method">Method</a>
+  </nav>
+  <div id="hdrReg"></div>
+</header>
 
-<div class="sec" id="s1"><div class="note"><b>How to read:</b> Step 2 of 2. Grey bar = Nifty 50 sector weight, green bar = recommended weight for the chosen regime. The figure beside each bar is the weight and the active bet (+ overweight / − underweight) versus the index. Switch regimes to compare.</div>
-<div class="card"><div class="tabs" id="rt" style="margin-top:0"></div>
-<label class="mut"><input type="checkbox" id="nm" checked> Normalise weights to 100%</label>
-<span class="mut"> &nbsp; Risk-free rate % <input id="rf" type="number" value="6.5" step="0.1" style="width:56px"></span>
-<div class="leg"><span><i style="background:var(--bar)"></i>Nifty 50</span><span><i style="background:var(--ac)"></i>Selected regime</span></div>
-<div id="bars"></div><div class="ins" id="ai"></div><div id="met" class="g2" style="margin-top:10px"></div><div id="chk"></div></div></div>
+<main>
+<div class="kpis" id="kpis"></div>
 
-<div class="sec" id="s2"><div class="note"><b>How to read:</b> One card per sector. The phase tag shows when the sector historically leads. Sensitivities are from the report's elasticity matrix (negative = hurt by a rise). Tap a card's tag to jump to that regime's allocation.</div><div class="g3" id="sg"></div></div>
-
-<div class="sec" id="s3"><div class="note"><b>How to read:</b> Each cell is the 10-year correlation of two sectors' returns. Dark = move together, light = diversify each other. Use the stress slider to see what happens in a liquidity sell-off, when most sectors fall together and diversification fades.</div>
-<div class="card"><div class="sl" style="grid-template-columns:80px 1fr 40px"><span>Stress</span><input type="range" id="st" min="0" max="100" value="0"><span id="stv">0%</span></div>
-<div class="sc"><table id="hm"></table></div><div class="ins" id="cs"></div></div></div>
-
-<div class="sec" id="s4"><div class="note"><b>How to read:</b> "What if" tool. Drag a shock (rate move, oil move, rupee move) and see the estimated hit or boost for each sector and for the regime portfolio chosen on the Allocation tab, compared with the index.</div>
-<div class="g2"><div class="card"><h2>Shock inputs</h2>
-<div class="sl"><span>Repo rate (bp)</span><input type="range" id="k0" min="-100" max="100" step="25" value="0"><span id="v0">0</span></div>
-<div class="sl"><span>Brent crude (%)</span><input type="range" id="k1" min="-30" max="30" step="5" value="0"><span id="v1">0</span></div>
-<div class="sl"><span>USD/INR (%)</span><input type="range" id="k2" min="-8" max="8" step="1" value="0"><span id="v2">0</span></div>
-<p class="mut">Positive USD/INR = weaker rupee. Impact = elasticity × shock, with repo per 100bp, Brent per 10%, USD/INR per 5%. Illustrative, in index-style % points.</p><div class="ins" id="sp"></div></div>
-<div class="card"><h2>Estimated sector impact</h2><div id="sb"></div><div id="pi" class="ins"></div></div></div></div>
-
-<div class="sec" id="s5"><div class="note"><b>How to read:</b> Pick a month (or click any bar or heatmap cell). Win rate = share of past years the market closed that month higher. Scores run from +1 (strong tailwind) to −1 (strong headwind). The last card blends seasonality into the regime allocation so you can see how a calendar tilt would shift weights.</div>
-<div class="tabs" id="mt"></div>
-<div class="g2"><div class="card sc2" id="md"></div><div class="card"><h2>Sector seasonal score</h2><div id="mb"></div><div class="ins" id="mi"></div></div></div>
-<div class="card"><h2>Seasonal heatmap</h2><p class="mut">Green = tailwind, red = headwind. Click a cell to jump to that month.</p><div class="sc"><table id="sh"></table></div></div>
-<div class="g2"><div class="card sc2"><h2>Sector calendar</h2><select id="ss" style="font:inherit;padding:4px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx)"></select><div id="sc"></div></div>
-<div class="card"><h2>Blend with regime</h2><p class="mut">Adjusted weight = regime weight × (1 + strength × seasonal score), then re-scaled to 100%. Illustrative overlay, not part of the report's optimiser, and it ignores the 2–25% caps.</p>
-<div class="tabs" id="br" style="margin:4px 0"></div>
-<div class="sl" style="grid-template-columns:110px 1fr 40px"><span>Tilt strength</span><input type="range" id="bk" min="0" max="50" value="25"><span id="bkv">25%</span></div>
-<div class="leg"><span><i style="background:var(--bar)"></i>Regime weight</span><span><i style="background:var(--ac)"></i>After seasonal tilt</span></div><div id="bl"></div></div></div>
-<div class="card"><details><summary>Why seasonality exists in India</summary><p class="mut"><b>Jan–Feb:</b> Union Budget speculation, then post-budget profit taking. <b>Mar:</b> advance-tax outflows and fiscal year-end NAV adjustments squeeze liquidity. <b>Apr–May:</b> fresh mandates and Q4 results support an "April effect" for banks, autos and IT. <b>Jun–Aug:</b> monsoon progress drives rural income, so autos, staples and fertilisers react; July is strong for pharma and defensives. <b>Oct–Dec:</b> Kharif harvest, Dussehra and Diwali lift retail lending, vehicles and housing, and it is the year's strongest window (autos, metals, energy, banks).</p></details></div></div>
-<div class="sec" id="s6"><div class="card"><h2>How the model works</h2>
-<details open><summary>1. Regime detection</summary>Eight indicators are converted to rolling 36-month z-scores. <b>G</b> = 0.35 Credit + 0.25 PMI + 0.20 IIP + 0.20 Earnings revisions. <b>I</b> = 0.35 CPI + 0.30 Repo + 0.20 Crude + 0.15 inverted yield slope. Regime 1: G≥0, I&lt;0. Regime 2: G&gt;0, I≥0. Regime 3: G≤0, I&gt;0. Regime 4: G&lt;0, I≤0. This dashboard takes raw readings and converts them with fixed centres and scales (editable under Calibration) because the 36-month history is not bundled.</details>
-<details><summary>2. Portfolio construction</summary>Black-Litterman blends market-implied returns with the regime view (risk aversion λ=2.85, τ=0.035). Hierarchical Risk Parity clusters correlated sectors so volatile ones (Metals, Realty) don't dominate risk. A quadratic optimiser then sets the final weights.</details>
-<details><summary>3. Constraints and safeguards</summary>Single sector 2% to 25%. Tracking error vs Nifty 50 at most 4.5% a year. Turnover at most 30% a quarter with a 0.15% transaction penalty. Cash 1% to 10%, at least 6 sectors held. Rebalance quarterly, only if drift exceeds ±2.5%. Circuit breakers: 8% peak-to-trough drawdown moves 30% to overnight TREPS; a correlation break above 0.85 signals a regime break.</details>
-<details><summary>4. Costs and caveats</summary>Rebalancing costs include brokerage, 18% GST on fees, and 0.1% STT on delivery trades, plus short-term capital gains tax for non-fund investors. Real cycles overlap: oil can spike while domestic growth is fine, and monsoon shocks can lift CPI without signalling a slowdown.</details>
-<h3>Glossary</h3>
-<p class="mut"><b>Z-score</b>: distance from average in standard deviations. <b>Repo</b>: RBI's policy rate; loans are linked to it via EBLR. <b>EBLR</b>: External Benchmark Lending Rate. <b>IIP</b>: Index of Industrial Production. <b>PMI</b>: Purchasing Managers' Index (50 = no change). <b>NIM</b>: bank net interest margin. <b>CAD</b>: current account deficit. <b>Tracking error</b>: how far returns stray from the index. <b>Sharpe</b>: return above risk-free per unit of volatility. <b>HRP</b>: Hierarchical Risk Parity. <b>TREPS</b>: overnight cash instrument.</p>
-<p class="mut">Data caveats: the report's weight columns do not sum to 100, Regime 1's Bank weight (30%) exceeds its own 25% cap, and FMCG's FX elasticity (+0.39) looks misaligned. All three are flagged where they appear. Seasonality: the study does not state its sample period, win rates are historical tendencies rather than forecasts, and Energy in July is scored +0.1 although the month table lists it as an underperformer.</p></div></div>
+<section id="s-macro">
+<div class="g2">
+  <div class="card">
+    <div class="ch"><span class="num">1</span><h2>Macro indicators</h2></div>
+    <p class="sub">Enter the latest reading for each indicator. Each becomes a z-score (distance from its normal level in standard deviations), then feeds Growth (G) or Inflation/tightening (I).</p>
+    <div class="presets" id="presets"></div>
+    <div id="inputs"></div>
+    <details><summary>Calibration: normal level and scale</summary>
+      <p>Credit, PMI and CPI use the report's thresholds. Other centres and scales are my assumptions; edit them to match your own 36-month history.</p>
+      <div id="calib" style="margin-top:8px"></div>
+    </details>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="num">2</span><h2>Where we are in the cycle</h2></div>
+    <div class="regbox"><div class="mut" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em">Detected regime</div><div class="regname" id="regname"></div><div class="mut" id="regdesc" style="font-size:12.5px"></div></div>
+    <div id="quad"></div>
+    <div class="pills" id="favpills" style="justify-content:center;margin-top:10px"></div>
+    <div class="callout" id="regrx"></div>
+  </div>
 </div>
+<div class="card">
+  <div class="ch"><h2>What is driving the regime</h2></div>
+  <p class="sub">Each bar is an indicator's contribution (weight × z-score). Right of the line pushes toward expansion or tightening; left pushes the other way.</p>
+  <div id="drivers"></div>
+</div>
+</section>
+
+<section id="s-signals">
+<div class="card">
+  <div class="ch"><span class="num">3</span><h2>Sector signal board</h2></div>
+  <p class="sub">Score = regime view (sector's weight vs Nifty 50 in the detected regime, ±6 points = ±1) blended with the selected month's seasonal score. Favour at +0.30 or above, Avoid at −0.30 or below.</p>
+  <div class="row">
+    <span class="mut">Weight on seasonality</span>
+    <input type="range" id="swIn" min="0" max="100" value="30" style="max-width:240px" oninput="sw=this.value/100;$('swv').textContent=this.value+'%';signals()">
+    <b id="swv">30%</b>
+    <span class="mut" style="margin-left:auto">Month</span><select id="msel" onchange="setMonth(+this.value)"></select>
+  </div>
+  <div id="signals"></div>
+  <div class="callout" id="sigsum"></div>
+</div>
+</section>
+
+<section id="s-alloc">
+<div class="card">
+  <div class="ch"><span class="num">4</span><h2>Recommended allocation</h2></div>
+  <p class="sub">Grey bar = Nifty 50 benchmark weight; blue bar = selected allocation. Pick a regime to compare.</p>
+  <div class="pills" id="apills"></div>
+  <div class="row">
+    <label class="mut"><input type="checkbox" id="nmIn" checked onchange="nm=this.checked;refresh()"> Normalise to 100%</label>
+    <label class="mut">Risk-free rate % <input type="number" id="rfIn" value="6.5" step="0.1" style="width:70px" onchange="rf=+this.value;refresh()"></label>
+  </div>
+  <div class="g2">
+    <div id="abars"></div>
+    <div><div class="mtiles" id="amt" style="margin-top:0;grid-template-columns:1fr 1fr"></div><div id="achk"></div></div>
+  </div>
+</div>
+</section>
+
+<section id="s-sectors">
+<div class="card">
+  <div class="ch"><h2>Sector profiles</h2></div>
+  <p class="sub">What drives each sector, what would hurt it, and its sensitivity to repo, Brent and USD/INR (report elasticities). Positive = moves with the driver; negative = moves against it.</p>
+  <div class="sgrid" id="profiles"></div>
+</div>
+</section>
+
+<section id="s-corr">
+<div class="card">
+  <div class="ch"><span class="num">5</span><h2>Correlations</h2></div>
+  <p class="sub">10-year correlation of sector returns (report). Dark = moves together, light = diversifies. Stress simulates a liquidity sell-off, when correlations drift toward 1.</p>
+  <div class="row"><span class="mut">Stress</span><input type="range" id="stIn" min="0" max="100" value="0" style="max-width:240px" oninput="st=+this.value;$('stv').textContent=this.value+'%';heat()"><b id="stv">0%</b></div>
+  <div class="tw" id="heat"></div>
+  <div class="legend"><span>0</span><div class="ramp"></div><span>1.0</span></div>
+  <div class="callout" id="corrsum"></div>
+</div>
+</section>
+
+<section id="s-shock">
+<div class="g2">
+  <div class="card">
+    <div class="ch"><span class="num">6</span><h2>Shock lab</h2></div>
+    <p class="sub">Move a shock to see the estimated effect on each sector and on the selected allocation. Illustrative, in index-style % points.</p>
+    <div class="irow"><div class="ih"><b>Repo rate</b><span class="stat" id="shv0">0 bp</span></div><input type="range" min="-100" max="100" step="25" value="0" oninput="sh[0]=+this.value;$('shv0').textContent=this.value+' bp';shock()"></div>
+    <div class="irow"><div class="ih"><b>Brent crude</b><span class="stat" id="shv1">0%</span></div><input type="range" min="-30" max="30" step="5" value="0" oninput="sh[1]=+this.value;$('shv1').textContent=this.value+'%';shock()"></div>
+    <div class="irow"><div class="ih"><b>USD/INR (+ = weaker rupee)</b><span class="stat" id="shv2">0%</span></div><input type="range" min="-8" max="8" step="1" value="0" oninput="sh[2]=+this.value;$('shv2').textContent=this.value+'%';shock()"></div>
+    <p class="hint" style="margin-top:8px">Scale: repo per 100 bp, Brent per 10%, USD/INR per 5%.</p>
+  </div>
+  <div class="card"><div class="ch"><h2>Estimated sector impact</h2></div><div id="shockout"></div></div>
+</div>
+</section>
+
+<section id="s-season">
+<div class="card">
+  <div class="ch"><span class="num">7</span><h2>Seasonality</h2></div>
+  <p class="sub">Historical up-rate = share of years the market closed the month higher. These are tendencies, not forecasts; the study does not state its sample period.</p>
+  <div class="pills" id="mpills"></div>
+  <div class="season-grid">
+    <div><div id="mbig"></div><div id="mbars"></div><div id="mdet"></div></div>
+    <div><h3 style="font-size:15px;margin-bottom:8px">Sector scores this month</h3><div id="mtable"></div></div>
+  </div>
+</div>
+<div class="card">
+  <div class="ch"><h2>Seasonal heatmap</h2></div>
+  <p class="sub">Score from −1 (headwind) to +1 (tailwind). Click any cell or month header to jump to that month.</p>
+  <div class="tw" id="shm"></div>
+</div>
+<div class="card">
+  <div class="ch"><h2>Sector calendar</h2></div>
+  <div class="row"><select id="scs" class="sel" onchange="cmpSel=this.value;season()"></select></div>
+  <div id="scal"></div>
+</div>
+<div class="card">
+  <div class="ch"><h2>Tilt the allocation by season</h2></div>
+  <p class="sub">Adjusted weight = regime weight × (1 + tilt × seasonal score), re-scaled to 100%. A simple overlay, not the report's optimiser; it ignores the 2–25% caps.</p>
+  <div class="row"><span class="mut">Tilt strength</span><input type="range" id="tiltIn" min="0" max="50" value="25" style="max-width:240px" oninput="tilt=this.value/100;$('tv').textContent=this.value+'%';tiltTable()"><b id="tv">25%</b></div>
+  <div id="tiltout"></div>
+</div>
+</section>
+
+<section id="s-method">
+<div class="card">
+  <div class="ch"><h2>Method and data notes</h2></div>
+  <details open><summary>1. Regime detection</summary>
+    <p>Each indicator is converted to a z-score: (reading − centre) ÷ scale, with the yield slope inverted. G = 0.35 credit + 0.25 PMI + 0.20 IIP + 0.20 earnings revisions. I = 0.35 CPI + 0.30 repo change + 0.20 Brent momentum + 0.15 inverted yield slope. Regime 1: G ≥ 0 and I &lt; 0. Regime 2: G &gt; 0 and I ≥ 0. Regime 3: G ≤ 0 and I &gt; 0. Regime 4: G &lt; 0 and I ≤ 0.</p>
+  </details>
+  <details><summary>2. Allocation</summary>
+    <p>Regime weights and expected returns come from the report's dynamic allocation matrix. The long-term risk-parity column is shown for reference. The report's optimiser uses Black-Litterman views, Hierarchical Risk Parity and a quadratic solver with 2–25% sector caps, a 4.5% tracking-error limit and a 30% quarterly turnover cap. This dashboard shows the target weights; it does not run the optimiser.</p>
+  </details>
+  <details><summary>3. Signals and seasonality</summary>
+    <p>The signal score combines regime-relative weight and the month's seasonal score. Seasonal scores and win rates come from the report's monthly tables, which the report presents without a sample period. Treat them as context, not timing signals.</p>
+  </details>
+  <details><summary>4. Source data checks</summary>
+    <p>The report's regime weight columns do not sum to 100 (the checks show each total; normalisation is on by default). Regime 1 lists Banks at 30%, above the report's 25% cap. The FMCG FX elasticity (+0.39) looks misaligned with its sector and is flagged for review. Mid-cycle favoured sectors were corrected in this version to Infra / capital goods and IT, matching the report's text; Banks had been added in error.</p>
+  </details>
+  <details><summary>5. Market context</summary>
+    <p>This dashboard does not pull live rates. Enter the current repo rate, CPI and other readings yourself, and check the latest RBI decision before relying on the repo input. The repo presets are illustrative, not live readings.</p>
+  </details>
+  <details><summary>Glossary</summary>
+    <p><b>Z-score</b>: distance from a normal level in standard deviations. <b>Repo</b>: RBI's policy rate. <b>EBLR</b>: external benchmark lending rate, to which floating retail loans are linked. <b>IIP</b>: industrial production index. <b>PMI</b>: purchasing managers' index (50 = no change). <b>Active share</b>: portion of the portfolio that differs from the index. <b>Sharpe</b>: return above risk-free per unit of volatility. <b>TREPS</b>: overnight cash instrument.</p>
+  </details>
+</div>
+<footer>Research tool, not investment advice. Figures come from the two source reports and the readings you enter.</footer>
+</section>
+</main>
+
 <script>
 const S=["Bank","IT","FMCG","Auto","Energy","Pharma","Metal","Realty","Infra"],N=[...S,"Cash"];
 const W={Bench:[33.5,11.5,8.5,7.5,10.5,4.5,3.5,1.5,5,0],R1:[30,6,4,14,6,2,4,9,9,1],R2:[25,18,5,10,8,4,8,4,12,1],R3:[12,10,10,4,22,8,16,2,10,3],R4:[10,12,22,3,8,20,2,2,3,5],LT:[12.5,14.5,18,9.5,10,15,5.5,3.5,7.5,1]};
 const M={Bench:[13.5,15.2],R1:[19.8,16.5],R2:[17.2,15.1],R3:[14.1,16.8],R4:[9.8,11.2],LT:[13.8,12.4]};
-const RN={R1:"1 · Early Recovery",R2:"2 · Mid-Cycle Expansion",R3:"3 · Late-Cycle Peak",R4:"4 · Contraction / Slowdown",LT:"Long-term risk parity"};
-const FAV={R1:["Banks","Realty","Auto"],R2:["Infra / Cap goods","IT","Banks"],R3:["Metals","Energy","Staples"],R4:["FMCG","Pharma","Cash"]};
-const RX={R1:"Growth is recovering while policy stays easy. Rate-sensitive cyclicals lead. Watch for: premature tightening or an oil spike.",R2:"Broad expansion with capex and upgrades to earnings. Industrials and IT lead. Watch for: capacity bottlenecks and creeping inflation.",R3:"Growth slows while inflation and input costs rise and the RBI tightens. Commodity producers lead. Watch for: de-rating of rate-sensitives.",R4:"Growth and earnings expectations are falling. Defensives and cash protect. Watch for: staying defensive too long and missing the recovery."};
+const RN={R1:"Early Recovery",R2:"Mid-Cycle Expansion",R3:"Late-Cycle Peak",R4:"Contraction / Slowdown",LT:"Long-term risk parity"};
+const RX={R1:"Growth is recovering while policy stays easy. Rate-sensitive cyclicals lead. Watch for premature tightening or an oil spike.",R2:"Broad expansion with capex and earnings upgrades. Industrials, capital goods and IT lead. Watch for capacity bottlenecks and creeping inflation.",R3:"Growth slows while inflation and input costs rise and the RBI tightens. Commodity producers lead. Watch for de-rating of rate-sensitive sectors.",R4:"Growth and earnings expectations fall. Defensives and cash protect capital. Watch for staying defensive too long and missing the recovery."};
+const FAV={R1:["Bank","Realty","Auto"],R2:["Infra","IT"],R3:["Metal","Energy","FMCG"],R4:["FMCG","Pharma","Cash"]};
 const CO=["Bank","Auto","IT","Pharma","FMCG","Metal","Realty","Energy","Infra"];
 const C=[[1,.72,.31,.38,.54,.64,.81,.67,.78],[.72,1,.35,.42,.58,.68,.74,.65,.76],[.31,.35,1,.44,.36,.38,.32,.39,.37],[.38,.42,.44,1,.49,.37,.35,.41,.43],[.54,.58,.36,.49,1,.42,.46,.52,.56],[.64,.68,.38,.37,.42,1,.69,.76,.81],[.81,.74,.32,.35,.46,.69,1,.68,.80],[.67,.65,.39,.41,.52,.76,.68,1,.82],[.78,.76,.37,.43,.56,.81,.80,.82,1]];
 const E={Bank:[-.65,-.22,-.15],IT:[.10,.12,.60],FMCG:[-.15,-.05,.39],Auto:[-.55,-.16,0],Energy:[-.25,.45,.20],Pharma:[-.10,0,.35],Metal:[-.35,-.12,.25],Realty:[-.85,-.18,-.20],Infra:[-.50,-.25,-.30]};
 const SG={Bank:["R1","Rate cuts, credit growth, falling NPAs","Wholesale funding cost spike; fresh NPAs","Moderate","High"],IT:["R2","US/EU tech spend, weaker rupee","US tech budget cuts; rupee strength","Nil","Nil"],FMCG:["R4","Inelastic demand, easing input costs","Farm terms of trade; palm oil and packaging inflation","Very high","Low"],Auto:["R1","Retail finance, pent-up demand","Rural cash-flow squeeze; steel, aluminium, rubber costs","Very high","Low-Mod"],Energy:["R3","Crude realisations, refining margins","Refining margin collapse; price controls","Low","Moderate"],Pharma:["R4","Non-discretionary spend, US generics","US FDA actions; generic price erosion","Low","Low"],Metal:["R3","Global demand (China), capacity peaks","China property slump; coking coal spikes","Low","High"],Realty:["R1","Lower mortgage rates via EBLR","EBLR hikes; high project leverage","Very low","Moderate"],Infra:["R2","Govt capex, utilisation above 75%","Fiscal constraints; working-capital debt costs","Moderate","Very high"]};
-const IN=[["Credit growth","G",.35,"Non-food bank credit growth, year on year. Above 14% = expansion, below 8% = weak.","%",11,3,4,20,.5,"RBI fortnightly bulletin",v=>v>14?"Expansion (>14%)":v<8?"Weak (<8%)":"Moderate (8–14%)"],["Mfg PMI","G",.25,"Manufacturing PMI. Above 54 = expansion, below 50 = contraction.","",52,2,44,60,.1,"S&P Global India",v=>v>54?"Expansion (>54)":v<50?"Contraction (<50)":"Mild growth (50–54)"],["IIP growth","G",.20,"Index of Industrial Production, year on year.","%",4,3,-4,12,.5,"MoSPI",v=>v>6?"Strong":v<2?"Weak":"Trend growth"],["Earnings revisions","G",.20,"Net share of Nifty analysts upgrading minus downgrading earnings.","%",0,10,-30,30,1,"Bloomberg / FactSet consensus",v=>v>5?"Upgrades dominate":v<-5?"Downgrades dominate":"Balanced"],["Headline CPI","I",.35,"Headline CPI inflation, year on year. RBI band is 2–6% around a 4% target.","%",4,2,0,10,.1,"MoSPI",v=>v>6?"Above RBI band (>6%)":v<2?"Below band (<2%)":"Within 2–6% band"],["Repo change (12m)","I",.30,"Change in the repo rate over the last 12 months. Cuts = easing, hikes = tightening.","bp",0,100,-150,150,25,"RBI (DBIE)",v=>v<0?"Easing cycle":v>0?"Tightening cycle":"On hold"],["Brent 3m change","I",.20,"Three-month change in Brent crude. Spikes widen the current account deficit.","%",0,15,-40,40,1,"ICE Brent futures",v=>v>10?"Spiking":v<-10?"Plunging":"Stable"],["Yield slope","I",.15,"10Y G-Sec yield minus repo rate, in percentage points. Flat or inverted = tighter (inverted in the score).","pp",1,.75,-1,3,.1,"CCIL / RBI",v=>v<0?"Inverted":v<1?"Flat":"Steep"]];
-const PR={"Early recovery":[12.5,54,5,8,3.5,-75,-5,1.8],"Mid expansion":[15,56,7,12,4.5,0,5,1.2],"Late peak":[9.5,51.5,2,-5,6.8,100,25,.2],"Slowdown":[7,48.5,0,-15,3,-25,-20,1]};
-let X=PR["Early recovery"].slice(),z=[],reg="R1",view="R1",G=0,I=0;
+const SB={Bank:"Early-year funding pressure, an April allocation surge, and a busy credit season in Oct–Dec.",IT:"Moves opposite to domestic cyclicals: July Q1 results help, December billing furloughs hurt.",FMCG:"Counter-cyclical in monsoon uncertainty; lags when money rotates into high-beta sectors in Oct–Dec.",Auto:"Monsoon lull weighs; September dealer stocking leads to Oct–Nov gains (up in 8 of the last 10 years).",Energy:"Follows refining margins and winter demand; domestic fuel demand rises after the monsoon.",Pharma:"Stable Apr–Jul; lags festive-quarter rallies but cushions Q1 consolidations.",Metal:"Tied to China and global manufacturing; monsoon curbs activity, post-monsoon rally in Oct–Dec.",Realty:"Highest beta and range of all sectors; festive pre-sales drive Q3 surges; March troughs.",Infra:"Pre-budget spikes in February; monsoon hinders execution Jun–Aug."};
+const SM={Bank:[-.6,-.3,-.2,.8,-.1,-.4,.4,-.5,-.1,.8,.9,.7],IT:[.6,.2,.1,-.5,.3,.1,.8,.7,.4,-.2,-.6,-.7],FMCG:[-.4,-.5,-.1,.2,.2,.7,.8,.6,.1,-.4,-.3,.2],Auto:[-.2,.3,.1,.7,-.4,-.3,.2,-.6,-.2,.9,.8,.4],Energy:[.4,-.1,.5,-.3,-.4,-.5,.1,-.2,.4,.7,.4,.6],Pharma:[-.8,-.7,.1,.7,.5,.7,.9,.5,.3,-.5,-.2,-.4],Metal:[-.1,.1,.6,.2,-.7,-.6,-.3,-.5,.2,.8,.5,.8],Realty:[-.7,-.2,-.8,.8,-.2,-.5,.1,-.6,-.3,.9,.9,.5],Infra:[-.2,.7,.2,.6,-.3,-.7,-.6,-.5,.1,.6,.8,.5]};
+const SP={Bank:["Apr, Oct, Nov, Dec","Jan, Feb, Aug"],Auto:["Apr, Oct, Nov","May, Aug, Sep"],IT:["Jan, Jul, Aug","Apr, Nov, Dec"],FMCG:["Jun, Jul, Aug","Jan, Feb, Oct"],Pharma:["Apr, Jun, Jul","Jan, Feb, Oct"],Metal:["Mar, Oct, Dec","May, Jun, Aug"],Realty:["Apr, Oct, Nov","Jan, Mar, Aug"],Energy:["Mar, Sep, Oct, Dec","May, Jun"],Infra:["Feb, Apr, Nov","Jun, Jul, Aug"]};
 const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],FM=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const WR=["35–40","40–45","45–50","70–75","50–55","45–50","70–75","40–45","45–50","75–80","70–75","65–70"],WM=[37.5,42.5,47.5,72.5,52.5,47.5,72.5,42.5,47.5,77.5,72.5,67.5];
 const MD=[["Highs early month; lows mid-to-late","IT, Energy","Pharma (37.5% win rate), Realty","Pre-budget caution; Q3 earnings kick-off; FII positioning resets"],["Lows post-Budget; gradual recovery late month","Auto, Infra","FMCG, Bank","Union Budget execution; Q3 results conclude; margin repricing"],["Trough mid-month; recovery into close","Metal, Energy","Realty, Financials","Advance-tax liquidity squeeze; fiscal year-end NAV adjustments"],["Lows in week 1; highs into month-end","Auto, Bank, Realty","FMCG, Energy","New financial year inflows; Q4 earnings start; retail demand revival"],["Consolidation; intermittent mid-month highs","Pharma, IT","Metal, Auto","'Sell in May' global cross-currents; Q4 results wrap up"],["Early rally often fades; lows late June","FMCG, Pharma (75% win rate)","Bank, Realty","Monsoon onset tracking; early kharif planting"],["Lows early month; highs mid-to-late","Pharma (86.7% win rate), IT","Metal, Energy","Q1 earnings season; monsoon distribution clarity"],["Mid-month peak, late-month weakness","FMCG, Healthcare","Auto, Bank","Monsoon dry spells; global risk-off cues"],["Choppy; quarter-end lows frequent","IT, Pharma","Auto, Realty","Advance-tax outflows; pre-festive channel inventory build-up"],["Lows early month; highs near Diwali/expiry","Auto (80%), Metal (80%), Bank","Pharma, IT","Navratri/Diwali festive consumption; Q2 results begin"],["Sustained upward momentum","Bank, Realty, Auto","FMCG, Healthcare","Rural harvest cash inflows; wedding-season retail credit"],["Lows first fortnight; highs in Santa rally","Metal, Energy, Bank","IT, Pharma","FII year-end window dressing; year-end auto discounts"]];
-const SM={Bank:[-.6,-.3,-.2,.8,-.1,-.4,.4,-.5,-.1,.8,.9,.7],IT:[.6,.2,.1,-.5,.3,.1,.8,.7,.4,-.2,-.6,-.7],FMCG:[-.4,-.5,-.1,.2,.2,.7,.8,.6,.1,-.4,-.3,.2],Auto:[-.2,.3,.1,.7,-.4,-.3,.2,-.6,-.2,.9,.8,.4],Energy:[.4,-.1,.5,-.3,-.4,-.5,.1,-.2,.4,.7,.4,.6],Pharma:[-.8,-.7,.1,.7,.5,.7,.9,.5,.3,-.5,-.2,-.4],Metal:[-.1,.1,.6,.2,-.7,-.6,-.3,-.5,.2,.8,.5,.8],Realty:[-.7,-.2,-.8,.8,-.2,-.5,.1,-.6,-.3,.9,.9,.5],Infra:[-.2,.7,.2,.6,-.3,-.7,-.6,-.5,.1,.6,.8,.5]};
-const SP={Bank:["Apr, Oct, Nov, Dec","Jan, Feb, Aug"],Auto:["Apr, Oct, Nov","May, Aug, Sep"],IT:["Jan, Jul, Aug","Apr, Nov, Dec"],FMCG:["Jun, Jul, Aug","Jan, Feb, Oct"],Pharma:["Apr, Jun, Jul","Jan, Feb, Oct"],Metal:["Mar, Oct, Dec","May, Jun, Aug"],Realty:["Apr, Oct, Nov","Jan, Mar, Aug"],Energy:["Mar, Sep, Oct, Dec","May, Jun"],Infra:["Feb, Apr, Nov","Jun, Jul, Aug"]};
-const SB={Bank:"Early-year funding pressure, an April allocation surge, and a busy credit season in Oct–Dec.",IT:"Moves opposite to domestic cyclicals: July Q1 results help, December billing furloughs hurt.",FMCG:"Counter-cyclical in monsoon uncertainty; lags when money rotates into high-beta sectors in Oct–Dec.",Auto:"Monsoon lull weighs; September dealer stocking leads to Oct–Nov gains (up in 8 of the last 10 years).",Energy:"Follows refining margins and winter demand; domestic fuel demand rises after the monsoon.",Pharma:"Stable Apr–Jul; lags festive-quarter rallies but cushions Q1 consolidations.",Metal:"Tied to China and global manufacturing; monsoon curbs activity, post-monsoon rally in Oct–Dec.",Realty:"Highest beta and range of all sectors; festive pre-sales drive Q3 surges; March troughs.",Infra:"Pre-budget spikes in February; monsoon hinders execution Jun–Aug."};
-let sm=new Date().getMonth();
-const $=i=>document.getElementById(i),f=(x,d=1)=>x.toFixed(d),sg=x=>(x>=0?"+":"")+f(x);
-const TN=["Regime detector","Allocation","Sector guide","Correlations","Shock lab","Seasonality","Method & glossary","Signal board"];[7,0,1,2,3,4,5,6].forEach(i=>{const b=document.createElement("button");b.textContent=TN[i];b.onclick=()=>tab(i);b.id="t"+i;$("tabs").appendChild(b)});
-function tab(i){for(let j=0;j<8;j++){$("s"+j).classList.toggle("on",i==j);$("t"+j).classList.toggle("on",i==j)}[,alloc,guide,heat,shock,seas,,board][i]?.();kpi()}
-Object.keys(PR).forEach(k=>{const b=document.createElement("button");b.textContent=k;b.onclick=()=>{X=PR[k].slice();draw();detect()};$("pre").appendChild(b)});
-function setZ(){z=IN.map((c,i)=>(i==7?-1:1)*(X[i]-c[5])/c[6])}
-function lab(i){$("z"+i).textContent="z "+sg(z[i]);$("st"+i).textContent=IN[i][11](X[i])}
-function upd(i,v){X[i]=+v;$("r"+i).value=v;$("n"+i).value=v;setZ();lab(i);detect()}
-function draw(){setZ();$("sliders").innerHTML=IN.map((c,i)=>`<div style="margin-top:10px"><div class="sl2"><b>${c[0]} <span class="mut">(${c[1]}, weight ${c[2]})</span></b><span class="pill" id="st${i}"></span></div><div class="sl" style="grid-template-columns:1fr 74px 44px"><input type="range" id="r${i}" min="${c[7]}" max="${c[8]}" step="${c[9]}" value="${X[i]}" oninput="upd(${i},this.value)"><input type="number" id="n${i}" step="${c[9]}" value="${X[i]}" onchange="upd(${i},this.value)" style="width:74px"><span class="mut" id="z${i}"></span></div><div class="d" style="margin-left:0">${c[3]} Unit: ${c[4]||"index"}. Source: ${c[10]}.</div></div>`).join("");IN.forEach((c,i)=>lab(i))}
-function calr(){$("cal").innerHTML=IN.map((c,i)=>`<div class="sl" style="grid-template-columns:1fr 70px 70px"><span>${c[0]}</span><input type="number" step="any" value="${c[5]}" onchange="IN[${i}][5]=+this.value;draw();detect()"><input type="number" step="any" value="${c[6]}" onchange="IN[${i}][6]=+this.value;draw();detect()"></div>`).join("")}
-function wts(k){let w=W[k].slice();if($("nm").checked){const s=w.reduce((a,b)=>a+b);w=w.map(x=>x/s*100)}return w}
-function kpi(){const m=M[view],rf=+$("rf").value,w=wts(view),b=wts("Bench");
-$("kp").innerHTML=[["Regime",RN[view].split(" · ").pop()],["Growth G",f(G,2)],["Inflation I",f(I,2)],["Exp. return",m[0]+"%"],["Exp. volatility",m[1]+"%"],["Sharpe",f((m[0]-rf)/m[1],2)],["Active share",f(w.reduce((s,x,i)=>s+Math.abs(x-b[i]),0)/2)+"%"],[FM[sm]+" win rate",WR[sm]+"% up"]].map(x=>`<div><span>${x[0]}</span><b>${x[1]}</b></div>`).join("")}
-function detect(){G=0;I=0;IN.forEach((x,i)=>{x[1]=="G"?G+=x[2]*z[i]:I+=x[2]*z[i]});
-reg=I<0?(G>=0?"R1":"R4"):(G>0?"R2":(I>0?"R3":"R4"));view=reg;
-$("rg").textContent="Regime "+RN[reg];$("gi").textContent=`G = ${f(G,2)} (growth) · I = ${f(I,2)} (inflation / tightening)`;
-$("fav").innerHTML="Favoured: "+FAV[reg].map(x=>`<span class="pill">${x}</span>`).join("");$("rgn").textContent=RX[reg];
-const cx=120+Math.max(-3,Math.min(3,I))*35,cy=100-Math.max(-3,Math.min(3,G))*30,q=(r,x,y)=>`<rect x="${x}" y="${y}" width="105" height="90" fill="${reg==r?"var(--ac)":"var(--bd)"}" opacity=".3"/>`;
-$("q").innerHTML=q("R1",15,10)+q("R2",120,10)+q("R3",120,100)+q("R4",15,100)+`<g fill="var(--mut)" font-size="10"><text x="20" y="24">1 Early</text><text x="125" y="24">2 Mid</text><text x="125" y="184">3 Late</text><text x="20" y="184">4 Slowdown</text><text x="170" y="112">I (inflation) →</text><text x="20" y="112">↑ G (growth)</text></g><circle cx="${cx}" cy="${cy}" r="7" fill="var(--ac)" stroke="#fff"/>`;kpi()}
-function alloc(){$("rt").innerHTML=["R1","R2","R3","R4","LT"].map(k=>`<button class="${k==view?"on":""}" onclick="view='${k}';alloc()">${k=="LT"?"Long-term":"Regime "+k[1]}</button>`).join("");
-const w=wts(view),b=wts("Bench");
-$("bars").innerHTML=`<h2 style="margin-top:6px">${RN[view]}${view==reg?" (detected)":""}</h2>`+N.map((n,i)=>{const a=w[i]-b[i];return `<div class="row"><span>${n}</span><div class="bt"><i class="b1" style="width:${b[i]*2.8}%"></i><i class="b2" style="width:${w[i]*2.8}%"></i></div><span><b>${f(w[i])}%</b> <span class="${a>=0?"pos":"neg"}">${sg(a)}</span></span></div>`}).join("");
-const d=N.map((n,i)=>[n,w[i]-b[i]]).sort((a,c)=>c[1]-a[1]);
-$("ai").innerHTML=`<b>Biggest overweights:</b> ${d.slice(0,3).map(x=>x[0]+" "+sg(x[1])).join(", ")} &nbsp;|&nbsp; <b>Biggest underweights:</b> ${d.slice(-3).reverse().map(x=>x[0]+" "+sg(x[1])).join(", ")}`;
-const rf=+$("rf").value,m=M[view],mb=M.Bench,sh=x=>f((x[0]-rf)/x[1],2);
-$("met").innerHTML=`<div class="card" style="margin:0"><div class="mut">Expected return / volatility (annual)</div><div class="big">${m[0]}% / ${m[1]}%</div><div class="mut">Sharpe ${sh(m)} vs Nifty 50 at ${mb[0]}% / ${mb[1]}% (${sh(mb)}). Cash cushions the defensive regime.</div></div><div class="card" style="margin:0"><div class="mut">Active share vs Nifty 50</div><div class="big">${f(w.reduce((s,x,i)=>s+Math.abs(x-b[i]),0)/2)}%</div><div class="mut">Share of the portfolio that differs from the index. Report limits: tracking error 4.5%, turnover 30% a quarter.</div></div>`;
-const raw=W[view],sum=raw.reduce((a,c)=>a+c),bad=[];
-raw.slice(0,9).forEach((x,i)=>{if(x>25)bad.push(`${N[i]} at ${x}% exceeds the 25% single-sector cap`);if(x<2)bad.push(`${N[i]} at ${x}% is under the 2% floor`)});
-if(Math.abs(sum-100)>.1)bad.unshift(`Source weights sum to ${f(sum)}%, not 100%`);
-$("chk").innerHTML=bad.length?`<div class="warn"><b>Source-table check</b><br>${bad.join("<br>")}</div>`:`<div class="mut">Source weights pass all constraints.</div>`;kpi()}
-$("nm").onchange=alloc;$("rf").oninput=alloc;
-function guide(){$("sg").innerHTML=S.map(n=>{const s=SG[n],e=E[n],c=v=>`<span class="${v>=0?"pos":"neg"}">${sg(v).replace("+","+")}</span>`;return `<div class="card sc2" style="margin:0"><h2>Nifty ${n}</h2><button style="padding:1px 8px;font-size:11px" onclick="view='${s[0]}';tab(1)">Leads in Regime ${s[0][1]}</button>
-<dl><dt>What drives it</dt><dd>${s[1]}</dd><dt>Main vulnerability</dt><dd>${s[2]}</dd><dt>Sensitivity (repo / crude / USD-INR)</dt><dd>${c(e[0])} / ${c(e[1])} / ${c(e[2])}</dd><dt>Rural exposure · Capex exposure</dt><dd>${s[3]} · ${s[4]}</dd><dt>Nifty 50 weight</dt><dd>${W.Bench[S.indexOf(n)]}%</dd><dt>Seasonal highs · lows</dt><dd><span class="pos">${SP[n][0]}</span> · <span class="neg">${SP[n][1]}</span></dd></dl></div>`}).join("")}
-function heat(){const s=$("st").value/100;$("stv").textContent=Math.round(s*100)+"%";
-const cc=(a,b)=>{const r=C[a][b];return a==b?1:r+s*(1-r)};
-$("hm").innerHTML="<tr><th></th>"+CO.map(c=>`<th>${c}</th>`).join("")+"</tr>"+CO.map((r,i)=>`<tr><th>${r}</th>${CO.map((c,j)=>{const v=cc(i,j);return `<td style="background:rgba(15,110,86,${v*.75});color:${v>.55?"#fff":"inherit"}" title="${r} vs ${c}">${f(v,2)}</td>`}).join("")}</tr>`).join("");
-const avg=CO.map((n,i)=>[n,CO.reduce((a,_,j)=>j==i?a:a+cc(i,j),0)/8]).sort((a,b)=>a[1]-b[1]),all=avg.reduce((a,x)=>a+x[1],0)/9;
-$("cs").innerHTML=`<b>Average pairwise correlation: ${f(all,2)}</b>${all>.75?" (diversification is largely gone)":all>.6?" (diversification is thinning)":""}<br><b>Best diversifiers:</b> ${avg.slice(0,3).map(x=>x[0]+" "+f(x[1],2)).join(", ")}. <b>Most clustered:</b> ${avg.slice(-3).reverse().map(x=>x[0]+" "+f(x[1],2)).join(", ")}.<br>Bank, Realty, Infra, Metal and Energy move as a cluster (up to 0.82); IT, Pharma and FMCG buffer them.`}
-$("st").oninput=heat;
-function shock(){const k=[0,1,2].map(i=>+$("k"+i).value);k.forEach((v,i)=>$("v"+i).textContent=v);
-const sc=[k[0]/100,k[1]/10,k[2]/5],imp=S.map(n=>[n,E[n].reduce((a,e,i)=>a+e*sc[i],0)]),mx=Math.max(.01,...imp.map(x=>Math.abs(x[1])));
-$("sb").innerHTML=imp.map(([n,v])=>`<div class="row" style="grid-template-columns:70px 1fr 60px"><span>${n}</span><div class="bt"><i style="top:4px;height:8px;width:${Math.abs(v)/mx*100}%;background:${v>=0?"var(--ac)":"var(--neg)"}"></i></div><span class="${v>=0?"pos":"neg"}">${sg(v).replace(/(\.\d\d)\d*/,"$1")}%</span></div>`).join("");
-const w=wts(view),b=wts("Bench"),pi=imp.reduce((a,x,i)=>a+x[1]*w[i]/100,0),bi=imp.reduce((a,x,i)=>a+x[1]*b[i]/100,0),s=[...imp].sort((a,c)=>c[1]-a[1]);
-$("pi").innerHTML=`<b>${RN[view]} portfolio:</b> <span class="${pi>=0?"pos":"neg"}">${f(pi,2)}%</span> · <b>Nifty 50 weights:</b> ${f(bi,2)}% · <b>Edge:</b> <span class="${pi-bi>=0?"pos":"neg"}">${sg(pi-bi).replace(/(\.\d\d)\d*/,"$1")}%</span>`;
-$("sp").textContent=k.every(v=>!v)?"Move a slider to start.":`Biggest beneficiary: ${s[0][0]}. Biggest casualty: ${s[8][0]}.`}
-const cls=(g,i)=>i<0?(g>=0?"R1":"R4"):(g>0?"R2":(i>0?"R3":"R4"));
-function board(){const sw=$("bw").value/100;$("bwv").textContent=Math.round(sw*100)+"%";
-$("bm").innerHTML=MN.map((m,i)=>`<button class="${i==sm?"on":""}" onclick="sm=${i};board();kpi()">${m}</button>`).join("");
-const w=wts(reg),b=wts("Bench"),rows=S.map((n,i)=>{const a=w[i]-b[i],se=SM[n][sm],sc=(1-sw)*Math.max(-1,Math.min(1,a/6))+sw*se;return{n,a,se,sc}}).sort((p,q)=>q.sc-p.sc),L=s=>s>=.3?["Favour","pos"]:s<=-.3?["Avoid","neg"]:["Neutral","mut"];
+/* [name, group (G=growth, I=inflation), weight, description, unit, centre, scale, min, max, step, source, label fn] */
+const IN=[
+["Credit growth","G",.35,"Non-food bank credit growth, year on year. Above 14% = expansion, below 8% = weak.","%",11,3,4,20,.5,"RBI fortnightly bulletin",v=>v>14?"Expansion (>14%)":v<8?"Weak (<8%)":"Moderate (8–14%)"],
+["Mfg PMI","G",.25,"Manufacturing PMI. Above 54 = expansion, below 50 = contraction.","",52,2,44,60,.1,"S&P Global India",v=>v>54?"Expansion (>54)":v<50?"Contraction (<50)":"Mild growth (50–54)"],
+["IIP growth","G",.20,"Index of Industrial Production, year on year.","%",4,3,-4,12,.5,"MoSPI",v=>v>6?"Strong":v<2?"Weak":"Trend growth"],
+["Earnings revisions","G",.20,"Net share of Nifty analysts upgrading minus downgrading earnings.","%",0,10,-30,30,1,"Bloomberg / FactSet consensus",v=>v>5?"Upgrades dominate":v<-5?"Downgrades dominate":"Balanced"],
+["Headline CPI","I",.35,"Headline CPI inflation, year on year. RBI band is 2–6% around a 4% target.","%",4,2,0,10,.1,"MoSPI",v=>v>6?"Above RBI band (>6%)":v<2?"Below band (<2%)":"Within 2–6% band"],
+["Repo change (12m)","I",.30,"Change in the repo rate over the last 12 months. Cuts = easing, hikes = tightening.","bp",0,100,-150,150,25,"RBI",v=>v<0?"Easing cycle":v>0?"Tightening cycle":"On hold"],
+["Brent 3m change","I",.20,"Three-month change in Brent crude. Spikes widen the current account deficit.","%",0,15,-40,40,1,"ICE Brent futures",v=>v>10?"Spiking":v<-10?"Plunging":"Stable"],
+["Yield slope","I",.15,"10Y G-Sec yield minus repo, in percentage points. Flat or inverted = tighter (inverted in the score).","pp",1,.75,-1,3,.1,"CCIL / RBI",v=>v<0?"Inverted":v<1?"Flat":"Steep"]];
+const PR={"Early recovery":[12.5,54,5,8,3.5,-75,-5,1.8],"Mid expansion":[15,56,7,12,4.5,0,5,1.2],"Late peak":[9.5,51.5,2,-5,6.8,100,25,.2],"Slowdown":[7,48.5,0,-15,3,-25,-20,1]};
+
+let X=PR["Early recovery"].slice(),Z=[],G=0,I=0,reg="R1",view="R1",sm=new Date().getMonth(),nm=true,rf=6.5,st=0,sw=.3,sh=[0,0,0],cmpSel="Bank",tilt=.25;
+const $=id=>document.getElementById(id),f=(v,d=1)=>v==null||isNaN(v)?"—":(+v).toFixed(d),sg=v=>(v>=0?"+":"")+(+v).toFixed(1),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+function zs(){return IN.map((c,i)=>(i==7?-1:1)*(X[i]-c[5])/c[6])}
+function regime(){Z=zs();G=0;I=0;IN.forEach((c,i)=>{if(c[1]=="G")G+=c[2]*Z[i];else I+=c[2]*Z[i]});reg=I<0?(G>=0?"R1":"R4"):(G>0?"R2":(I>0?"R3":"R4"))}
+function wts(k){let w=W[k].slice();if(nm){const s=w.reduce((a,b)=>a+b,0);w=w.map(x=>x/s*100)}return w}
+function metrics(k){const w=wts(k),b=wts("Bench"),m=M[k];return{ret:m[0],vol:m[1],sh:(m[0]-rf)/m[1],act:w.reduce((s,x,i)=>s+Math.abs(x-b[i]),0)/2}}
+const vlabel=k=>k=="LT"?"Long-term":"Regime "+k[1];
+
+function renderTop(){const m=metrics(view);
+$("hdrReg").innerHTML=`<span class="hchip">${RN[reg]}</span><span class="hchip">${FM[sm]} · ${WR[sm]}% up</span>`;
+$("kpis").innerHTML=`<div class="kpi"><div class="l">Regime</div><div class="v" style="font-size:17px">${RN[reg]}</div><div class="d">detected from indicators</div></div>
+<div class="kpi"><div class="l">Growth score (G)</div><div class="v">${f(G,2)}</div><div class="d">${G>=0?"At or above trend":"Below trend"}</div></div>
+<div class="kpi"><div class="l">Inflation score (I)</div><div class="v">${f(I,2)}</div><div class="d">${I>=0?"Inflation / tightening pressure":"Easing bias"}</div></div>
+<div class="kpi"><div class="l">${vlabel(view)} return</div><div class="v">${f(m.ret)}%</div><div class="d">vol ${f(m.vol)}% · Sharpe ${f(m.sh,2)}</div></div>
+<div class="kpi"><div class="l">Active share vs Nifty 50</div><div class="v">${f(m.act)}%</div><div class="d">${FM[sm]} historical up-rate ${WR[sm]}%</div></div>`}
+
+function allStats(){IN.forEach((c,i)=>{const s=$("st"+i);if(s)s.textContent=c[11](X[i]);const zv=$("zv"+i);if(zv)zv.textContent="z "+sg(Z[i]);const sl=$("sl"+i);if(sl&&+sl.value!=X[i])sl.value=X[i];const nb=$("nb"+i);if(nb&&+nb.value!=X[i])nb.value=X[i]})}
+
+function quad(){const cx=150,cy=120,k=40,px=cx+clamp(I,-3,3)*k,py=cy-clamp(G,-3,3)*k,q=(r,x,y)=>`<rect x="${x}" y="${y}" width="150" height="120" class="${reg==r?"qa":"q"}"/>`;
+$("quad").innerHTML=`<svg viewBox="0 0 300 240" class="quadsvg">${q("R1",0,0)}${q("R2",150,0)}${q("R3",150,120)}${q("R4",0,120)}
+<text x="10" y="18" class="ql">1 · Early recovery</text><text x="290" y="18" text-anchor="end" class="ql">2 · Mid-cycle</text><text x="290" y="234" text-anchor="end" class="ql">3 · Late-cycle</text><text x="10" y="234" class="ql">4 · Slowdown</text>
+<circle cx="${px}" cy="${py}" r="18" class="halo"/><circle cx="${px}" cy="${py}" r="8" class="dot"/></svg>
+<div class="mut" style="text-align:center;font-size:11.5px;margin-top:4px">Vertical = growth (G, up is stronger) · Horizontal = inflation / tightening (I, right is tighter)</div>`}
+
+function drivers(){const c=IN.map((x,i)=>({x,i,v:x[2]*Z[i]})),mx=Math.max(...c.map(o=>Math.abs(o.v)),.01);
+$("drivers").innerHTML=c.map(o=>{const w=Math.abs(o.v)/mx*50,left=o.v>=0?50:50-w;return `<div class="drow"><span class="dl">${o.x[0]} <em>${o.x[1]=="G"?"growth":"inflation"}</em></span><div class="dbar"><div class="dmid"></div><i style="left:${left}%;width:${w}%;background:${o.v>=0?"var(--pos)":"var(--neg)"}"></i></div><span class="dv ${o.v>=0?"pos":"neg"}">${sg(o.v)}</span></div><div class="dnote">reading ${X[o.i]}${o.x[4]?" "+o.x[4]:""} · ${o.x[11](X[o.i])}</div>`}).join("")}
+
+function buildInputs(){$("inputs").innerHTML=IN.map((c,i)=>`<div class="irow"><div class="ih"><b>${c[0]}</b><span class="grp">${c[1]=="G"?"Growth":"Inflation"} · weight ${c[2]}</span><span class="stat" id="st${i}"></span></div><div class="ictl"><input type="range" id="sl${i}" min="${c[7]}" max="${c[8]}" step="${c[9]}" value="${X[i]}" oninput="setX(${i},this.value)"><input type="number" id="nb${i}" step="${c[9]}" value="${X[i]}" onchange="setX(${i},this.value)"><span class="unit">${c[4]}</span><span class="zv" id="zv${i}"></span></div><div class="hint">${c[3]} <i>Source: ${c[10]}</i></div></div>`).join("");
+$("presets").innerHTML=Object.keys(PR).map(k=>`<button class="btn" onclick="setPreset('${k}')">${k}</button>`).join("")}
+function buildCalib(){$("calib").innerHTML=`<div class="crow hd"><span>Indicator</span><span>Centre</span><span>Scale</span></div>`+IN.map((c,i)=>`<div class="crow"><span>${c[0]}</span><input type="number" step="any" value="${c[5]}" onchange="IN[${i}][5]=+this.value;refresh()"><input type="number" step="any" value="${c[6]}" onchange="IN[${i}][6]=+this.value;refresh()"></div>`).join("")}
+function setX(i,v){X[i]=+v;$("sl"+i).value=X[i];$("nb"+i).value=X[i];refresh()}
+function setPreset(k){X=PR[k].slice();buildInputs();refresh()}
+function setMonth(i){sm=i;refresh()}
+function setView(k){view=k;refresh()}
+
+function signals(){const w=wts(reg),b=wts("Bench"),rows=S.map((n,i)=>{const a=w[i]-b[i],se=SM[n][sm],sc=(1-sw)*clamp(a/6,-1,1)+sw*se;return{n,a,se,sc}}).sort((p,q)=>q.sc-p.sc);
+$("signals").innerHTML=`<div class="sgrid">`+rows.map(r=>{const lab=r.sc>=.3?["Favour","pos"]:r.sc<=-.3?["Avoid","neg"]:["Neutral","mut"],p=(r.sc+1)/2*100;
+return `<div class="scard ${lab[1]}"><div class="shead"><b>${r.n}</b><span class="tag ${lab[1]}">${lab[0]}</span></div><div class="gauge"><span style="left:${p}%"></span></div><div class="sfacts"><div><span>Weight vs Nifty</span><b class="${r.a>=0?"pos":"neg"}">${sg(r.a)} pts</b></div><div><span>${MN[sm]} season</span><b class="${r.se>=0?"pos":"neg"}">${sg(r.se)}</b></div><div><span>Combined score</span><b>${sg(r.sc)}</b></div><div><span>Phase</span><b>${RN[SG[r.n][0]]}</b></div></div><div class="hint" style="margin-top:8px"><b>Hurt by:</b> ${SG[r.n][2]}</div></div>`}).join("")+`</div>`;
 const fv=rows.filter(r=>r.sc>=.3).map(r=>r.n),av=rows.filter(r=>r.sc<=-.3).map(r=>r.n);
-$("bsum").innerHTML=`<h2>Signal summary</h2><div class="big">Regime ${RN[reg]}</div><div class="mut">G ${f(G,2)} · I ${f(I,2)} · ${FM[sm]} historical win rate ${WR[sm]}%</div><p><b class="pos">Favour:</b> ${fv.join(", ")||"none"}<br><b class="neg">Avoid:</b> ${av.join(", ")||"none"}</p><p class="mut">${RX[reg]}</p>`;
-$("btb").innerHTML=`<tr><th>Sector</th><th>Signal</th><th>Score</th><th>Regime active weight</th><th>${MN[sm]} season</th><th>What would hurt it</th></tr>`+rows.map(r=>{const l=L(r.sc);return `<tr><td><b>${r.n}</b></td><td class="${l[1]}"><b>${l[0]}</b></td><td>${sg(r.sc)}</td><td class="${r.a>=0?"pos":"neg"}">${sg(r.a)} pts</td><td class="${r.se>=0?"pos":"neg"}">${sg(r.se)}</td><td class="l mut">${SG[r.n][2]}</td></tr>`}).join("");
-const c=IN.map((x,i)=>({x,i,v:x[2]*z[i]})).sort((p,q)=>Math.abs(q.v)-Math.abs(p.v)).slice(0,4);
-$("bwhy").innerHTML=`<h2>What is driving the regime</h2><p class="mut">Largest contributions to G and I (weight × z-score):</p>`+c.map(o=>`<div class="row" style="grid-template-columns:1fr 80px"><span>${o.x[0]}: <b>${X[o.i]}${o.x[4]&&o.x[4]!="pp"?o.x[4]:o.x[4]?" pp":""}</b> <span class="mut">${o.x[11](X[o.i])}</span></span><span>${sg(o.v)} to ${o.x[1]}</span></div>`).join("");
-const gF=cls(G>=0?-.001:.001,I),iF=cls(G,I>=0?-.001:.001),dm=Math.min(Math.abs(G),Math.abs(I));
-$("bwatch").innerHTML=`<h2>What would change the regime</h2><p>Growth G is ${f(G,2)}. If it crosses zero the model moves to <b>${RN[gF]}</b>.</p><p>Inflation I is ${f(I,2)}. If it crosses zero it moves to <b>${RN[iF]}</b>.</p><p class="mut">Distance to the nearest boundary: ${f(dm,2)}. ${dm<.25?"Close to a boundary, so treat this call as fragile.":"Reasonably clear of the boundaries."} The report requires 2 consecutive monthly confirmations before acting on a switch.</p>`}
-$("bw").oninput=board;
-$("ss").innerHTML=S.map(n=>`<option>${n}</option>`).join("");
-function seas(){$("mt").innerHTML=MN.map((m,i)=>`<button class="${i==sm?"on":""}" onclick="sm=${i};seas()">${m}</button>`).join("");
-const d=MD[sm],now=sm==new Date().getMonth()?" · this month":"";
-$("md").innerHTML=`<h2>${FM[sm]}${now}</h2><div class="big">${WR[sm]}% <span class="mut">of years up</span></div><div style="display:flex;gap:3px;align-items:flex-end;height:50px;margin:6px 0 2px">${WM.map((v,i)=>`<div title="${FM[i]}: ${WR[i]}%" onclick="sm=${i};seas()" style="flex:1;height:${v/80*100}%;background:${i==sm?"var(--ac)":"var(--bar)"};border-radius:2px;cursor:pointer"></div>`).join("")}</div><div style="display:flex;gap:3px" class="mut">${MN.map(m=>`<span style="flex:1;text-align:center;font-size:9px">${m[0]}</span>`).join("")}</div><dl><dt>Within-month pattern</dt><dd>${d[0]}</dd><dt>Outperformers</dt><dd class="pos">${d[1]}</dd><dt>Underperformers / defensive</dt><dd class="neg">${d[2]}</dd><dt>Catalyst</dt><dd>${d[3]}</dd></dl>`;
+$("sigsum").innerHTML=`<b>Favour:</b> ${fv.join(", ")||"none clear"} &nbsp;·&nbsp; <b>Avoid:</b> ${av.join(", ")||"none clear"} &nbsp;·&nbsp; ${FM[sm]} historical up-rate ${WR[sm]}%.`}
+
+function alloc(){$("apills").innerHTML=["R1","R2","R3","R4","LT"].map(k=>`<button class="btn ${k==view?"on":""}" onclick="setView('${k}')">${k=="LT"?"Long-term risk parity":"Regime "+k[1]+" · "+RN[k]}</button>`).join("");
+const w=wts(view),b=wts("Bench"),mx=Math.max(...w,...b,1),m=metrics(view),bm=metrics("Bench");
+$("abars").innerHTML=N.map((n,i)=>`<div class="brow"><span>${n}</span><div class="bpair"><div class="bb" style="width:${b[i]/mx*100}%"></div><div class="bw" style="width:${w[i]/mx*100}%"></div></div><span class="bv"><b>${f(w[i])}%</b> <em class="${w[i]-b[i]>=0?"pos":"neg"}">${sg(w[i]-b[i])}</em></span></div>`).join("");
+$("amt").innerHTML=`<div class="mt"><div class="l">Expected return</div><div class="v">${f(m.ret)}%</div><div class="mut" style="font-size:11.5px">Nifty ${f(bm.ret)}%</div></div><div class="mt"><div class="l">Volatility</div><div class="v">${f(m.vol)}%</div><div class="mut" style="font-size:11.5px">Nifty ${f(bm.vol)}%</div></div><div class="mt"><div class="l">Sharpe</div><div class="v">${f(m.sh,2)}</div><div class="mut" style="font-size:11.5px">Nifty ${f(bm.sh,2)}</div></div><div class="mt"><div class="l">Active share</div><div class="v">${f(m.act)}%</div><div class="mut" style="font-size:11.5px">report TE cap 4.5%</div></div>`;
+const raw=W[view],sum=raw.reduce((a,c)=>a+c,0),bad=[];raw.slice(0,9).forEach((x,i)=>{if(x>25)bad.push(`${N[i]} at ${x}% exceeds the 25% single-sector cap`);if(x<2)bad.push(`${N[i]} at ${x}% is under the 2% floor`)});
+if(Math.abs(sum-100)>.1)bad.unshift(`Source weights sum to ${f(sum)}%, not 100%${nm?" (normalised here)":""}`);
+$("achk").innerHTML=bad.length?`<div class="warn"><b>Source-table check</b><br>${bad.join("<br>")}</div>`:`<div class="callout">Source weights pass all constraints.</div>`}
+
+function profiles(){$("profiles").innerHTML=S.map((n,i)=>{const s=SG[n],e=E[n],tg=v=>`<span class="tag ${v>0?"pos":v<0?"neg":"mut"}">${v>0?"+":""}${v.toFixed(2)}</span>`;
+return `<div class="scard"><div class="shead"><b>${n}</b><span class="tag mut">Nifty ${W.Bench[i]}%</span></div><div class="mut" style="font-size:12px">Leads in ${RN[s[0]]}</div><p style="font-size:12.5px;margin:8px 0">${SB[n]}</p><div class="hint"><b>Drivers:</b> ${s[1]}</div><div class="hint" style="margin-top:4px"><b>Risk:</b> ${s[2]}</div><div class="sfacts"><div><span>Repo</span>${tg(e[0])}</div><div><span>Crude</span>${tg(e[1])}</div><div><span>USD/INR</span>${tg(e[2])}</div><div><span>Rural / capex</span>${s[3]} / ${s[4]}</div></div></div>`}).join("")}
+
+function heat(){const s=st/100,cc=(a,b)=>a==b?1:C[a][b]+s*(1-C[a][b]),col=v=>{const t=clamp(v,0,1);return `rgb(${[239,246,255].map((x,i)=>Math.round(x+([29,78,216][i]-x)*t)).join(",")})`};
+$("heat").innerHTML=`<table class="hm"><tr><th></th>${CO.map(c=>`<th>${c}</th>`).join("")}</tr>`+CO.map((r,i)=>`<tr><th>${r}</th>${CO.map((c,j)=>{const v=cc(i,j);return `<td style="background:${col(v)};color:${v>.6?"#fff":"#0b1220"}" title="${r} vs ${c}">${f(v,2)}</td>`}).join("")}</tr>`).join("")+`</table>`;
+const avg=CO.map((n,i)=>[n,CO.reduce((a,_,j)=>j==i?a:a+cc(i,j),0)/8]).sort((a,b)=>a[1]-b[1]),all=avg.reduce((a,x)=>a+x[1],0)/9;
+$("corrsum").innerHTML=`<b>Average pairwise correlation: ${f(all,2)}</b>${all>.75?" — diversification largely gone":all>.6?" — diversification thinning":" — diversification intact"}.<br>Best diversifiers: ${avg.slice(0,3).map(x=>x[0]+" "+f(x[1],2)).join(", ")}. Most clustered: ${avg.slice(-3).reverse().map(x=>x[0]+" "+f(x[1],2)).join(", ")}.`}
+
+function shock(){const s=[sh[0]/100,sh[1]/10,sh[2]/5],imp=S.map(n=>[n,E[n].reduce((a,e,i)=>a+e*s[i],0)]),mx=Math.max(.01,...imp.map(x=>Math.abs(x[1])));
+const w=wts(view),b=wts("Bench"),pf=imp.reduce((a,x,i)=>a+x[1]*w[i]/100,0),bm=imp.reduce((a,x,i)=>a+x[1]*b[i]/100,0),worst=[...imp].sort((a,c)=>a[1]-c[1])[0];
+$("shockout").innerHTML=imp.map(([n,v])=>`<div class="brow" style="grid-template-columns:72px 1fr 70px"><span>${n}</span><div class="bpair"><div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#cbd5e1"></div><div style="position:absolute;height:12px;top:1px;border-radius:4px;background:${v>=0?"var(--pos)":"var(--neg)"};${v>=0?`left:50%;width:${Math.abs(v)/mx*50}%`:`right:50%;width:${Math.abs(v)/mx*50}%`}"></div></div><span class="bv ${v>=0?"pos":"neg"}"><b>${sg(v)}%</b></span></div>`).join("")+
+`<div class="mtiles" style="grid-template-columns:1fr 1fr 1fr"><div class="mt"><div class="l">${vlabel(view)} portfolio</div><div class="v ${pf>=0?"pos":"neg"}">${sg(pf)}%</div></div><div class="mt"><div class="l">Nifty 50 weights</div><div class="v">${sg(bm)}%</div></div><div class="mt"><div class="l">Edge vs index</div><div class="v ${pf-bm>=0?"pos":"neg"}">${sg(pf-bm)}%</div></div></div>
+<div class="callout">Most exposed sector: <b>${worst[0]}</b> (${sg(worst[1])}%). Shocks of zero leave every impact at zero.</div>`}
+
+function season(){
+$("mpills").innerHTML=MN.map((m,i)=>`<button class="btn ${i==sm?"on":""}" onclick="setMonth(${i})">${m}</button>`).join("");
+$("mbig").innerHTML=`<div class="big">${FM[sm]} <span class="mut" style="font-size:15px;font-family:Inter;font-weight:500">historical up-rate ${WR[sm]}%</span></div>`;
+$("mbars").innerHTML=`<div class="month-bars">`+WM.map((v,i)=>`<div class="mbar ${i==sm?"on":""}" title="${FM[i]}: ${WR[i]}%" onclick="setMonth(${i})" style="height:${v}%;background:${i==sm?"var(--acc)":(v>=60?"#86efac":"#cbd5e1")}"><span>${MN[i]}</span></div>`).join("")+`</div>`;
+const d=MD[sm];$("mdet").innerHTML=`<dl class="facts"><dt>Within-month pattern</dt><dd>${d[0]}</dd><dt>Outperformers</dt><dd class="pos">${d[1]}</dd><dt>Underperformers / defensive</dt><dd class="neg">${d[2]}</dd><dt>Catalyst</dt><dd>${d[3]}</dd></dl>`;
 const r=S.map(n=>[n,SM[n][sm]]).sort((a,b)=>b[1]-a[1]);
-$("mb").innerHTML=r.map(([n,v])=>`<div class="row" style="grid-template-columns:70px 1fr 40px"><span>${n}</span><div class="bt"><i style="top:4px;height:8px;width:${Math.abs(v)*100}%;background:${v>=0?"var(--ac)":"var(--neg)"}"></i></div><span class="${v>=0?"pos":"neg"}">${sg(v)}</span></div>`).join("");
-$("mi").innerHTML=`<b>${FM[sm]} tailwinds:</b> ${r.slice(0,3).map(x=>x[0]).join(", ")}. <b>Headwinds:</b> ${r.slice(-3).reverse().map(x=>x[0]).join(", ")}.`;
-$("sh").innerHTML="<tr><th></th>"+MN.map((m,i)=>`<th style="${i==sm?"outline:2px solid var(--tx)":""}">${m}</th>`).join("")+"</tr>"+S.map(n=>`<tr><th>${n}</th>${SM[n].map((v,i)=>`<td onclick="sm=${i};seas()" title="${n}, ${FM[i]}: ${sg(v)}" style="cursor:pointer;background:${v>=0?`rgba(15,110,86,${v*.85})`:`rgba(179,57,47,${-v*.85})`};color:${Math.abs(v)>.55?"#fff":"inherit"}">${sg(v)}</td>`).join("")}</tr>`).join("");
-const s=$("ss").value,v=SM[s];
-$("sc").innerHTML=`<svg viewBox="0 0 300 130" style="width:100%"><line x1="0" x2="300" y1="55" y2="55" stroke="var(--bd)"/>${v.map((x,i)=>`<rect x="${6+i*24}" width="18" y="${x>=0?55-x*50:55}" height="${Math.abs(x)*50}" rx="2" fill="${x>=0?"var(--ac)":"var(--neg)"}" opacity="${i==sm?1:.55}" onclick="sm=${i};seas()" style="cursor:pointer"><title>${FM[i]} ${sg(x)}</title></rect><text x="${15+i*24}" y="125" font-size="9" text-anchor="middle" fill="var(--mut)" ${i==sm?'font-weight="700"':""}>${MN[i]}</text>`).join("")}</svg><dl><dt>Historical highs</dt><dd class="pos">${SP[s][0]}</dd><dt>Historical lows</dt><dd class="neg">${SP[s][1]}</dd><dt>Behaviour</dt><dd>${SB[s]}</dd></dl>`;
-$("br").innerHTML=["R1","R2","R3","R4","LT"].map(k=>`<button class="${k==view?"on":""}" onclick="view='${k}';seas()">${k=="LT"?"Long-term":"Regime "+k[1]}</button>`).join("");blend();kpi()}
-$("ss").onchange=seas;$("bk").oninput=blend;
-function blend(){const k=$("bk").value/100;$("bkv").textContent=Math.round(k*100)+"%";
-const w=wts(view),q=w.map((x,i)=>i<9?x*(1+k*SM[S[i]][sm]):x),t=q.reduce((a,b)=>a+b),a=q.map(x=>x/t*100),d=N.map((n,i)=>[n,a[i]-w[i]]).sort((p,c)=>c[1]-p[1]);
-$("bl").innerHTML=N.map((n,i)=>`<div class="row"><span>${n}</span><div class="bt"><i class="b1" style="width:${w[i]*2.8}%"></i><i class="b2" style="width:${a[i]*2.8}%"></i></div><span><b>${f(a[i])}%</b> <span class="${a[i]-w[i]>=0?"pos":"neg"}">${sg(a[i]-w[i])}</span></span></div>`).join("")+`<div class="ins">${FM[sm]} seasonality adds to ${d.slice(0,2).map(x=>x[0]+" "+sg(x[1])).join(", ")} and trims ${d.slice(-2).reverse().map(x=>x[0]+" "+sg(x[1])).join(", ")}.</div>`}
-["k0","k1","k2"].forEach(i=>$(i).oninput=()=>{shock();kpi()});
-calr();draw();detect();tab(7);
-</script></body></html>
+$("mtable").innerHTML=r.map(([n,v])=>`<div class="brow" style="grid-template-columns:72px 1fr 52px"><span>${n}</span><div class="bpair"><div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#cbd5e1"></div><div style="position:absolute;top:2px;height:10px;border-radius:4px;background:${v>=0?"var(--pos)":"var(--neg)"};${v>=0?`left:50%;width:${v*50}%`:`right:50%;width:${-v*50}%`}"></div></div><span class="bv ${v>=0?"pos":"neg"}"><b>${sg(v)}</b></span></div>`).join("");
+$("shm").innerHTML=`<table class="hm"><tr><th></th>${MN.map((m,i)=>`<th style="cursor:pointer;${i==sm?"color:var(--acc)":""}" onclick="setMonth(${i})">${m}</th>`).join("")}</tr>`+S.map(n=>`<tr><th>${n}</th>${SM[n].map((v,i)=>`<td onclick="setMonth(${i})" style="cursor:pointer;background:${v>=0?`rgba(5,150,105,${.15+v*.7})`:`rgba(220,38,38,${.15-v*.7})`};color:${Math.abs(v)>.6?"#fff":"#0b1220"};${i==sm?"outline:2px solid #0b1f3f;":""}">${sg(v)}</td>`).join("")}</tr>`).join("")+`</table>`;
+$("scs").innerHTML=S.map(n=>`<option ${n==cmpSel?"selected":""}>${n}</option>`).join("");
+const v=SM[cmpSel],zy=100,k=75,H=190;
+$("scal").innerHTML=`<svg viewBox="0 0 600 ${H}" style="width:100%;height:auto"><line x1="0" x2="600" y1="${zy}" y2="${zy}" stroke="#cbd5e1"/>${v.map((x,i)=>{const bx=12+i*48,hh=Math.abs(x)*k,y=x>=0?zy-hh:zy;return `<rect x="${bx}" y="${y}" width="30" height="${hh}" rx="5" fill="${x>=0?"var(--pos)":"var(--neg)"}" opacity="${i==sm?1:.55}" style="cursor:pointer" onclick="setMonth(${i})"><title>${FM[i]} ${sg(x)}</title></rect><text x="${bx+15}" y="${H-6}" text-anchor="middle" font-size="11" fill="${i==sm?"#0b1f3f":"#64748b"}" font-weight="${i==sm?700:500}">${MN[i]}</text>`}).join("")}</svg>
+<dl class="facts"><dt>Historical highs</dt><dd class="pos">${SP[cmpSel][0]}</dd><dt>Historical lows</dt><dd class="neg">${SP[cmpSel][1]}</dd><dt>Behaviour</dt><dd>${SB[cmpSel]}</dd></dl>`;
+tiltTable()}
+
+function tiltTable(){const w=wts(view),q=w.map((x,i)=>i<9?x*(1+tilt*SM[S[i]][sm]):x),tot=q.reduce((a,b)=>a+b,0),a=q.map(x=>x/tot*100),mx=Math.max(...a,...w,1),ch=N.map((n,i)=>[n,a[i]-w[i]]),up=[...ch].sort((x,y)=>y[1]-x[1]).slice(0,2),dn=[...ch].sort((x,y)=>x[1]-y[1]).slice(0,2);
+$("tiltout").innerHTML=N.map((n,i)=>`<div class="brow"><span>${n}</span><div class="bpair"><div class="bb" style="width:${w[i]/mx*100}%"></div><div class="bw" style="width:${a[i]/mx*100}%"></div></div><span class="bv"><b>${f(a[i])}%</b> <em class="${a[i]-w[i]>=0?"pos":"neg"}">${sg(a[i]-w[i])}</em></span></div>`).join("")+
+`<div class="callout">${FM[sm]} tilts toward ${up.map(x=>x[0]+" "+sg(x[1])).join(", ")} and away from ${dn.map(x=>x[0]+" "+sg(x[1])).join(", ")}.</div>`}
+
+function refresh(){regime();allStats();renderTop();quad();drivers();signals();alloc();heat();shock();season();
+$("msel").value=sm;$("regname").textContent=RN[reg];$("regdesc").textContent="G "+f(G,2)+" · I "+f(I,2);$("regrx").textContent=RX[reg];
+$("favpills").innerHTML=`<span class="mut" style="font-size:12px;margin-right:4px;align-self:center">Favoured:</span>`+FAV[reg].map(x=>`<span class="tag pos">${x}</span>`).join("")}
+
+buildInputs();buildCalib();profiles();
+$("msel").innerHTML=MN.map((m,i)=>`<option value="${i}">${FM[i]}</option>`).join("");
+refresh();
+</script>
+</body></html>
